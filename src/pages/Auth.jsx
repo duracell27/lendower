@@ -23,19 +23,19 @@ const Auth = () => {
   const handleAuth = () => {
     if (tabName === "registr") {
       if (name.length < 3) {
-        toast.error('імя повинно бути більше ніж 3 символи')
+        return toast.error('імя повинно бути більше ніж 3 символи')
           
       }
       if (!email.length) {
-        toast.error('введіть свій емейл')
+        return toast.error('введіть свій емейл')
  
       }
       if (!emailRegex.test(email)) {
-        toast.error('не правильний емейл')
+        return toast.error('не правильний емейл')
         
       }
       if (!passwordRegex.test(password)) {
-        toast.error('пароль має бути від 6 до 20 символів, 1 цифра, 1 велика, 1 мала літера')
+        return toast.error('пароль має бути від 6 до 20 символів, 1 цифра, 1 велика, 1 мала літера')
       }
       axios.post(process.env.REACT_APP_BASIC_URL + "/registr", {
         name,
