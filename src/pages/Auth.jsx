@@ -43,13 +43,37 @@ const Auth = () => {
         password,
       }).then(response=>{
         if(response.status === 200){
-            console.log('front from back',response.data)
+            // console.log('front from back',response.data)
             storeInSession('user', JSON.stringify(response.data))
             setUserAuth(response.data)
           toast.success('реєстрація успішна')
            navigate('/')
         }
       });
+    }
+    if (tabName === "login") {
+        if (!email.length) {
+            return toast.error('введіть свій емейл')
+     
+          }
+          if (!emailRegex.test(email)) {
+            return toast.error('не правильний емейл')
+            
+          }
+          if (!passwordRegex.test(password)) {
+            return toast.error('пароль має бути від 6 до 20 символів, 1 цифра, 1 велика, 1 мала літера')
+          }
+          axios.post(process.env.REACT_APP_BASIC_URL + "/login", {
+            email,
+            password,
+          }).then(response=>{
+            if(response.status === 200){
+                storeInSession('user', JSON.stringify(response.data))
+                setUserAuth(response.data)
+              toast.success('ви успішно ввійшли')
+               navigate('/')
+            }
+          })
     }
   };
   return (
